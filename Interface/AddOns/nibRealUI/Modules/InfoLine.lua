@@ -123,7 +123,9 @@ local Tablets = {
 	durability = Tablet20,
 }
 
-local HPName, CPName, JPName, VPName, TCName, WFName, GoldName, MoguName
+-- Try Dynamics Currency start
+local HPName, CPName, JPName, VPName, BPCurr1Name, BPCurr2Name, BPCurr3Name, GoldName, 
+-- Try Dynamics Currency end
 local CurrencyStartSet
 
 local LootSpecIDs = {}
@@ -1254,13 +1256,13 @@ local function Currency_UpdateTablet()
 				NAME,
 				LEVEL_ABBR,
 				GoldName,
-				L["Timeless"],
-				L["Warforged"],
+				"LLL1",
+				"LLL2",
+				"LLL3"
 				L["Justice Points"],
 				L["Valor Points"],
 				L["Honor Points"],
 				L["Conquest Points"],
-				L["Mogu Runes"],
 				L["Updated"]
 			}
 			RealmSection[realm].charCat = Tablets.currency:AddCategory("columns", #charCols)
@@ -1459,9 +1461,14 @@ local function Currency_GetVals()
 	curr[CPName] = 0
 	curr[JPName] = 0
 	curr[VPName] = 0
-	curr[TCName] = 0
-	curr[MoguName] = 0
-	curr[WFName] = 0
+	-- Try Dynamics Currency Start
+	curr[BPCurr1Name] = 0
+	curr[BPCurr2Name] = 0
+	curr[BPCurr3Name] = 0
+	--curr[TCName] = 0
+	--curr[MoguName] = 0
+	--curr[WFName] = 0
+	-- Try Dynamics Currency End
 	
 	local currencySize = GetCurrencyListSize()
 	for i = 1, currencySize do
@@ -1490,11 +1497,14 @@ local function Currency_Update(self)
 	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].updated = curDate
 	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].jp = currVals[JPName] or 0
 	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].vp = currVals[VPName] or 0
-	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc = currVals[TCName] or 0
-	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf = currVals[WFName] or 0
+	--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc = currVals[TCName] or 0
+	--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf = currVals[WFName] or 0
+	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr1 = currVals[TCName] or 0
+	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr2 = currVals[TCName] or 0
+	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr3 = currVals[TCName] or 0
 	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].hp = currVals[HPName] or 0
 	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].cp = currVals[CPName] or 0
-	dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu = currVals[MoguName] or 0
+	--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu = currVals[MoguName] or 0
 	
 	if self.hasshown or self.initialized then
 		local oldVPW = dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].vpw
@@ -1516,19 +1526,25 @@ local function Currency_Update(self)
 			"",
 			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].hp,
 			"",
-			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu,
-			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc,
-			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf,
+			--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu,
+			--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc,
+			--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf,
+			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr1,
+			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr2,
+			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr3,
 			"",
 			nil,
 			-- Start session values
 			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].jp,
 			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].vp,
 			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].hp,
-			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc,
-			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf,
+			--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc,
+			--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf,
+			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr1,
+			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr2,
+			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr3,
 			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].cp,
-			dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu,
+			--dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu,
 		}
 		
 		-- Start Session
@@ -1568,20 +1584,23 @@ local function Currency_Update(self)
 								nameStr,
 								dbg.currency[kr][kf][kn].level,
 								dbg.currency[kr][kf][kn].gold,
-								dbg.currency[kr][kf][kn].tc,
-								dbg.currency[kr][kf][kn].wf,
+								--dbg.currency[kr][kf][kn].tc,
+								--dbg.currency[kr][kf][kn].wf,
+								dbg.currency[kr][kf][kn].bpcurr1,
+								dbg.currency[kr][kf][kn].bpcurr2,
+								dbg.currency[kr][kf][kn].bpcurr3,
 								dbg.currency[kr][kf][kn].jp,
 								vpStr,
 								dbg.currency[kr][kf][kn].hp,
 								cpStr,
-								dbg.currency[kr][kf][kn].mogu,
+								--dbg.currency[kr][kf][kn].mogu,
 								dbg.currency[kr][kf][kn].updated,
 								kn,
 								dbg.currency[kr][kf][kn].jp,
 								dbg.currency[kr][kf][kn].vp,
 								dbg.currency[kr][kf][kn].hp,
 								dbg.currency[kr][kf][kn].cp,
-								dbg.currency[kr][kf][kn].mogu
+								--dbg.currency[kr][kf][kn].mogu
 							})
 						end
 						
@@ -1606,9 +1625,11 @@ local function Currency_Update(self)
 			CurText = nibRealUI:ReadableNumber(rawValue, 1)
 		end
 	elseif dbc.currencystate == 2 then
-		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc or 0) .. " TC"
+		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr1 or 0) .. " LLL1"
+		--CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].tc or 0) .. " TC"
 	elseif dbc.currencystate == 3 then
-		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf or 0) .. " War"
+		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr2 or 0) .. " LLL2"
+		--CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].wf or 0) .. " War"
 	elseif dbc.currencystate == 4 then
 		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].jp or 0) .. " JP"
 	elseif dbc.currencystate == 5 then
@@ -1622,7 +1643,8 @@ local function Currency_Update(self)
 	elseif dbc.currencystate == 9 then
 		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].cpw or 0) .. " CPw"
 	elseif dbc.currencystate == 10 then
-		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu or 0) .. " Mogu"
+		CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].bpcurr3 or 0) .. " LLL3"
+		--CurText = tostring(dbg.currency[nibRealUI.realm][nibRealUI.faction][nibRealUI.name].mogu or 0) .. " Mogu"
 	end
 	self.text:SetFormattedText("%s", CurText)
 	if dbc.currencystate == 1 then
@@ -4030,18 +4052,28 @@ function InfoLine:PLAYER_LOGIN()
 	CPName = GetCurrencyInfo(390)
 	JPName = GetCurrencyInfo(395)
 	VPName = GetCurrencyInfo(396)
-	WFName = GetCurrencyInfo (776)
-	TCName = GetCurrencyInfo(777)
+	-- Try Dynamics Currency Start
+	--WFName = GetCurrencyInfo (776)
+	--TCName = GetCurrencyInfo(777)
 
-	local moguIndex
-	for i = 1, GetCurrencyListSize(), 1 do
-		local _,_,_,_,_,_,_,_, icon = GetCurrencyListInfo(i)
-		if icon == "Interface\\Icons\\archaeology_5_0_mogucoin" then
-			moguIndex = i
-		end
+	
+	local BPCurrsIndex = {}
+	BPCurrsIndex[1] = 0
+	BPCurrsIndex[2] = 0
+	BPCurrsIndex[3] = 0
+	for i = 1, GetNumWatchedTokens() do
+		local name, count, extraCurrencyType, icon, itemid = GetBackpackCurrencyInfo(i)
+		BPCurrsIndex[i] = itemid
+	--	if icon == "Interface\\Icons\\archaeology_5_0_mogucoin" then
+	--		moguIndex = i
+	--	end
 	end
-	MoguName = moguIndex and GetCurrencyInfo(moguIndex) or ""	
-
+	--MoguName = moguIndex and GetCurrencyInfo(moguIndex) or ""
+	
+	BPCurr1Name = GetCurrencyInfo(BPCurrsIndex[1])
+	BPCurr2Name = GetCurrencyInfo(BPCurrsIndex[2])
+	BPCurr3Name = GetCurrencyInfo(BPCurrsIndex[3])
+	-- Try Dynamics Currency End
 	GoldName = strtrim(strsub(strform(nibRealUI.goldstr or GOLD_AMOUNT, 0), 2))
 
 	-- Loot Spec
@@ -4156,12 +4188,15 @@ function InfoLine:OnInitialize()
 							jp = -1,
 							vp = -1,
 							vpw = -1,
-							tc = -1,
-							wf = -1,
+							--tc = -1,
+							--wf = -1,
+							bpcurr1 = -1,
+							bpcurr2 = -1,
+							bpcurr3 = -1,
 							hp = -1,
 							cp = -1,
 							cpw = -1,
-							mogu = -1,
+							--mogu = -1,
 							updated = "",
 						},
 					},
